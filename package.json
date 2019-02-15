@@ -4,7 +4,8 @@
   "description": "Script to maintain your reading position when the DOM changes",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --config config/webpack.config.js --watch",
+    "start": "node server.js",
+    "build": "webpack --config config/webpack.config.js",
     "build:watch": "npm run build -- --watch",
     "test": "mocha $(find src -name '*test.js')"
   },
@@ -31,10 +32,13 @@
     "eslint-loader": "^2.1.2",
     "eslint-plugin-import": "^2.16.0",
     "eslint-plugin-prettier": "^3.0.1",
+    "express": "^4.16.4",
     "mocha": "^5.2.0",
     "nodemon": "^1.18.10",
     "prettier": "^1.16.4",
     "webpack": "^4.29.3",
-    "webpack-cli": "^3.2.3"
+    "webpack-cli": "^3.2.3",
+    "webpack-dev-middleware": "^3.5.2",
+    "webpack-hot-middleware": "^2.24.3"
   }
 }
