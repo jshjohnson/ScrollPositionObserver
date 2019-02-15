@@ -1,0 +1,40 @@
+{
+  "name": "keep-my-scroll-position",
+  "version": "0.0.0",
+  "description": "Script to maintain your reading position when the DOM changes",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --config config/webpack.config.js --watch",
+    "build:watch": "npm run build -- --watch",
+    "test": "mocha $(find src -name '*test.js')"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jshjohnson/KeepMyScrollPosition.git"
+  },
+  "author": "Josh Johnson",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jshjohnson/KeepMyScrollPosition/issues"
+  },
+  "homepage": "https://github.com/jshjohnson/KeepMyScrollPosition#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.3.1",
+    "babel-loader": "^8.0.5",
+    "chai": "^4.2.0",
+    "eslint": "^5.13.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-config-prettier": "^4.0.0",
+    "eslint-loader": "^2.1.2",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-prettier": "^3.0.1",
+    "mocha": "^5.2.0",
+    "nodemon": "^1.18.10",
+    "prettier": "^1.16.4",
+    "webpack": "^4.29.3",
+    "webpack-cli": "^3.2.3"
+  }
+}
