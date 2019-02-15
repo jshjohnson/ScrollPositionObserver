@@ -18,7 +18,6 @@ if (process.env.NODE_ENV !== 'production') {
 
   app.use(
     webpackDevMiddleware(compiler, {
-      publicPath: '/assets/scripts/',
       stats: {
         colors: true,
       },
