@@ -11,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jshjohnson/KeepMyScrollPosition.git"
+    "url": "git+https://github.com/jshjohnson/ScrollPositionObserver.git"
   },
   "author": "Josh Johnson",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jshjohnson/KeepMyScrollPosition/issues"
+    "url": "https://github.com/jshjohnson/ScrollPositionObserver/issues"
   },
-  "homepage": "https://github.com/jshjohnson/KeepMyScrollPosition#readme",
+  "homepage": "https://github.com/jshjohnson/ScrollPositionObserver#readme",
   "dependencies": {},
   "devDependencies": {
     "@babel/cli": "^7.2.3",

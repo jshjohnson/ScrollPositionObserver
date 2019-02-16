@@ -31,17 +31,25 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const root = document.querySelector('#root');
-      const positionObserver = new KeepMyScrollPosition(root);
-      console.log(positionObserver);
-      positionObserver.observe();
-      
-      
+      const positionObserver = new ScrollPositionObserver(root);
+      positionObserver.start();
+    
       setTimeout(() => {
         const componentToAdd = document.createElement('div');
         componentToAdd.classList.add('component');
 
-        root.insertBefore(componentToAdd, root.firstChild);
+        root.insertBefore(componentToAdd.cloneNode(), root.firstChild);
+        root.appendChild(componentToAdd.cloneNode());
       }, 2000);
+      
+      setTimeout(() => {
+        const thirdParagraph = root.querySelectorAll('p')[0];
+        const componentToAdd = document.createElement('div');
+        componentToAdd.classList.add('component');
+
+        thirdParagraph.appendChild(componentToAdd.cloneNode());
+      }, 3000);
+      
     });
   </script>
 </body>

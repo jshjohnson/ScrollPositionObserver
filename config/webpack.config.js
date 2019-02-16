@@ -7,7 +7,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, '..', 'public'),
     filename: '[name].js',
-    library: 'KeepMyScrollPosition',
+    library: 'ScrollPositionObserver',
     libraryTarget: 'umd',
   },
   module: {

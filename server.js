@@ -24,7 +24,11 @@ if (process.env.NODE_ENV !== 'production') {
     }),
   );
 
-  app.use(webpackHotMiddleware(compiler));
+  app.use(
+    webpackHotMiddleware(compiler, {
+      reload: true,
+    }),
+  );
 }
 
 app.use(express.static(DIST_DIR));

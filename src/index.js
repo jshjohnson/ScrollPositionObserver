@@ -1,45 +1,93 @@
-class KeepMyScrollPosition {
+class ScrollPositionObserver {
   constructor(target) {
-    this.target = target;
-    this.windowHeight = document.documentElement.scrollHeight;
-    this.scrollPos = document.documentElement.scrollTop || 0;
+    this._target = target;
+    this._scrollPos = document.documentElement.scrollTop || 0;
 
-    this.onScroll = this.onScroll.bind(this);
-    this.onDOMChange = this.onDOMChange.bind(this);
-    this.observer = new MutationObserver(this.onDOMChange);
+    this._onScroll = this._onScroll.bind(this);
+    this._onDOMChange = this._onDOMChange.bind(this);
 
-    this.addEventListeners();
+    this._observer = new MutationObserver(this._onDOMChange);
   }
 
-  addEventListeners() {
-    window.addEventListener('scroll', this.onScroll);
+  _addEventListeners() {
+    window.addEventListener('scroll', this._onScroll);
   }
 
-  removeEventListeners() {
-    window.removeEventListener('scroll', this.onScroll);
+  _removeEventListeners() {
+    window.removeEventListener('scroll', this._onScroll);
   }
 
-  onScroll() {
-    this.scrollPos = document.documentElement.scrollTop;
+  _onScroll() {
+    this._scrollPos = document.documentElement.scrollTop;
   }
 
-  onDOMChange() {
-    const prevWindowHeight = this.windowHeight;
-    const newWindowHeight = document.documentElement.scrollHeight;
-    const differenceInWindowHeight = newWindowHeight - prevWindowHeight;
-    const newScrollPos = this.scrollPos + differenceInWindowHeight;
-
-    document.documentElement.scrollTop = newScrollPos;
+  _disconnect() {
+    this._observer.disconnect();
   }
 
-  observe() {
-    this.observer.observe(this.target, {
+  _onDOMChange(mutations) {
+    mutations.forEach(mutation => {
+      const [addedNode] = mutation.addedNodes;
+      const prevScrollPos = this._scrollPos;
+
+      let newScrollPos;
+      const {
+        offsetHeight: heightOfAddedNode,
+        offsetTop: offsetOfAddedNode,
+      } = addedNode;
+
+      const wasAboveScrollPos =
+        offsetOfAddedNode - heightOfAddedNode < this._scrollPos;
+
+      if (wasAboveScrollPos) {
+        /*
+          If we haven't scrolled yet and there is an offset
+          we need to also add the offset to avoid a jump.
+          
+          The offset is the space between the top of the page
+          and the element
+          
+          _______________________
+          |       Offset        |
+          |  __________________ |
+          | |                 | |
+          | |                 | |
+        */
+
+        if (prevScrollPos === 0 && offsetOfAddedNode) {
+          newScrollPos =
+            this._scrollPos + heightOfAddedNode + offsetOfAddedNode;
+        } else {
+          newScrollPos = this._scrollPos + heightOfAddedNode;
+        }
+
+        this._scrollPos = newScrollPos;
+      }
+
+      if (prevScrollPos !== newScrollPos) {
+        document.documentElement.scrollTop = this._scrollPos;
+      }
+    });
+  }
+
+  _observe() {
+    this._observer.observe(this._target, {
       childList: true,
       subtree: true,
       attributes: true,
       characterData: true,
     });
   }
+
+  start() {
+    this._addEventListeners();
+    this._observe();
+  }
+
+  stop() {
+    this._removeEventListeners();
+    this._disconnect();
+  }
 }
 
-module.exports = KeepMyScrollPosition;
+module.exports = ScrollPositionObserver;

@@ -6,8 +6,9 @@
     "node": true
   },
   "rules": {
-    "import/prefer-default-export": false,
-    "import/no-extraneous-dependencies": false,
+    "no-underscore-dangle": 0,
+    "import/prefer-default-export": 0,
+    "import/no-extraneous-dependencies": 0,
     "prettier/prettier": ["error", {
       "singleQuote": true,
       "trailingComma": "all"
