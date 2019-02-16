@@ -4,9 +4,9 @@
   "description": "Script to maintain your reading position when the DOM changes",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js",
-    "build": "webpack --config config/webpack.config.js",
-    "build:watch": "npm run build -- --watch",
+    "start": "node server.js && npm run dev",
+    "dev": "webpack --config config/webpack.config.js --watch",
+    "build": "webpack --config config/webpack.config.prod.js",
     "test": "mocha $(find src -name '*test.js')"
   },
   "repository": {

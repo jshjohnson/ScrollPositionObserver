@@ -40,21 +40,7 @@ class ScrollPositionObserver {
         offsetOfAddedNode - heightOfAddedNode < this._scrollPos;
 
       if (wasAboveScrollPos) {
-        /*
-          If we haven't scrolled yet and there is an offset
-          we need to also add the offset to avoid a jump.
-          
-          The offset is the space between the top of the page
-          and the element
-          
-          _______________________
-          |       Offset        |
-          |  __________________ |
-          | |                 | |
-          | |                 | |
-        */
-
-        if (prevScrollPos === 0 && offsetOfAddedNode) {
+        if (offsetOfAddedNode < heightOfAddedNode) {
           newScrollPos =
             this._scrollPos + heightOfAddedNode + offsetOfAddedNode;
         } else {

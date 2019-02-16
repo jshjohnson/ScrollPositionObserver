@@ -11,7 +11,7 @@ if (process.env.NODE_ENV !== 'production') {
   const webpack = require('webpack');
   const webpackDevMiddleware = require('webpack-dev-middleware');
   const webpackHotMiddleware = require('webpack-hot-middleware');
-  const config = require('./config/webpack.config');
+  const config = require('./config/webpack.config.dev');
 
   console.log('Compiling bundle... 👷🏽');
   const compiler = webpack(config);
