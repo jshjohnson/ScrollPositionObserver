@@ -4,6 +4,7 @@ class ScrollPositionObserver {
     this._scrollPos = document.documentElement.scrollTop || 0;
 
     this._onScroll = this._onScroll.bind(this);
+    this._onLoad = this._onLoad.bind(this);
     this._onDOMChange = this._onDOMChange.bind(this);
 
     this._observer = new MutationObserver(this._onDOMChange);
@@ -11,10 +12,16 @@ class ScrollPositionObserver {
 
   _addEventListeners() {
     window.addEventListener('scroll', this._onScroll);
+    window.addEventListener('load', this._onLoad);
   }
 
   _removeEventListeners() {
     window.removeEventListener('scroll', this._onScroll);
+    window.removeEventListener('load', this._onLoad);
+  }
+
+  _onLoad() {
+    this._scrollPos = document.documentElement.scrollTop;
   }
 
   _onScroll() {
@@ -28,30 +35,14 @@ class ScrollPositionObserver {
   _onDOMChange(mutations) {
     mutations.forEach(mutation => {
       const [addedNode] = mutation.addedNodes;
-      const prevScrollPos = this._scrollPos;
-
-      let newScrollPos;
-      const {
-        offsetHeight: heightOfAddedNode,
-        offsetTop: offsetOfAddedNode,
-      } = addedNode;
-
+      const clientRect = addedNode.getBoundingClientRect();
+      const distanceFromTop = this._scrollPos + clientRect.top;
       const wasAboveScrollPos =
-        offsetOfAddedNode - heightOfAddedNode < this._scrollPos;
+        distanceFromTop <= this._scrollPos + clientRect.height;
 
       if (wasAboveScrollPos) {
-        if (offsetOfAddedNode < heightOfAddedNode) {
-          newScrollPos =
-            this._scrollPos + heightOfAddedNode + offsetOfAddedNode;
-        } else {
-          newScrollPos = this._scrollPos + heightOfAddedNode;
-        }
-
-        this._scrollPos = newScrollPos;
-      }
-
-      if (prevScrollPos !== newScrollPos) {
-        document.documentElement.scrollTop = this._scrollPos;
+        document.documentElement.scrollTop =
+          this._scrollPos + clientRect.height + clientRect.x;
       }
     });
   }
